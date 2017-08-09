@@ -13,14 +13,22 @@ app.use(express.static('client/build'));
 app.get('/mylist', function(req, res) {
   db.collection('mylist').find().toArray(function(err, results) {
     res.json(results);
-  })
-})
+  });
+});
 
 app.post('/mylist', function(req, res) {
   db.collection('mylist').save(req.body, function(err, result) {
     res.redirect('/');
-  })
-})
+  });
+});
+
+app.post('/delete', function(req, res) {
+  db.collection('mylist').remove({}, function(err, result) {
+    res.redirect('/');
+  });
+});
+
+
 
 
 MongoClient.connect('mongodb://localhost:27017/bucket_list', function(err, database) {
