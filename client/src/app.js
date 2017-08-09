@@ -1,4 +1,5 @@
 var SelectListView = require('./views/selectListView');
+var MyListView = require('./views/myListView');
 
 var makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -12,7 +13,7 @@ var requestComplete = function() {
 
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
-  console.log(countries);
+  // console.log(countries);
   var countriesView = new SelectListView(countries)
 }
 
@@ -23,15 +24,12 @@ var saveToMyList = function(evt) {
   var value = this.value
   var postToMyList = { "name": value }
 
-
-  
   var putRequest = new XMLHttpRequest();
   putRequest.addEventListener('load', function() {
     saveMyListComplete(this, postToMyList);
   });
   putRequest.open("POST", mylistUrl)
   putRequest.setRequestHeader('Content-Type', 'application/json')
-//  saveMyListComplete(postToMyList)
   putRequest.send(JSON.stringify(postToMyList))
 }
 
@@ -45,13 +43,15 @@ var saveToMyList = function(evt) {
 var saveMyListComplete = function(res, data) {
   if(res.status !== 200) return;
 
-  console.log(res.responseText);
-  console.log(data)
+  // console.log(res.responseText);
+  // console.log(data) 
+}
 
-  // var jsonString = this.value;
-  // country = JSON.parse(jsonString);
-  // console.log(country);
-  // var myListView = new MyListView(country)
+var completeBucketList = function() {
+  // console.log(this.responseText);
+  var jsonString = this.responseText;
+  myCountries = JSON.parse(jsonString);
+  var myListView = new MyListView(myCountries);
 }
 
 
@@ -64,6 +64,9 @@ var app = function(){
 
   var countrySelect = document.querySelector("#countries-list")
   countrySelect.addEventListener("change", saveToMyList)
+
+  var ourUrl = "/mylist";
+  makeRequest(ourUrl, completeBucketList);
 }
 
 

@@ -72,6 +72,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var SelectListView = __webpack_require__(2);
+var MyListView = __webpack_require__(3);
 
 var makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -85,7 +86,7 @@ var requestComplete = function() {
 
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
-  console.log(countries);
+  // console.log(countries);
   var countriesView = new SelectListView(countries)
 }
 
@@ -96,15 +97,12 @@ var saveToMyList = function(evt) {
   var value = this.value
   var postToMyList = { "name": value }
 
-
-  
   var putRequest = new XMLHttpRequest();
   putRequest.addEventListener('load', function() {
     saveMyListComplete(this, postToMyList);
   });
   putRequest.open("POST", mylistUrl)
   putRequest.setRequestHeader('Content-Type', 'application/json')
-//  saveMyListComplete(postToMyList)
   putRequest.send(JSON.stringify(postToMyList))
 }
 
@@ -118,13 +116,15 @@ var saveToMyList = function(evt) {
 var saveMyListComplete = function(res, data) {
   if(res.status !== 200) return;
 
-  console.log(res.responseText);
-  console.log(data)
+  // console.log(res.responseText);
+  // console.log(data) 
+}
 
-  // var jsonString = this.value;
-  // country = JSON.parse(jsonString);
-  // console.log(country);
-  // var myListView = new MyListView(country)
+var completeBucketList = function() {
+  // console.log(this.responseText);
+  var jsonString = this.responseText;
+  myCountries = JSON.parse(jsonString);
+  var myListView = new MyListView(myCountries);
 }
 
 
@@ -137,6 +137,9 @@ var app = function(){
 
   var countrySelect = document.querySelector("#countries-list")
   countrySelect.addEventListener("change", saveToMyList)
+
+  var ourUrl = "/mylist";
+  makeRequest(ourUrl, completeBucketList);
 }
 
 
@@ -163,6 +166,32 @@ SelectListView.prototype = {
 }
 
 module.exports = SelectListView;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+var MyListView = function(myCountries){
+  this.render(myCountries);
+  
+  console.log(myCountries[0])
+}
+
+
+MyListView.prototype = {
+
+  render: function(myCountries){
+    var ul = document.querySelector("#my-list");
+    
+    myCountries.forEach( function(myCountry){
+      var li = document.createElement("li");
+      li.innerText = myCountry.name;
+      ul.appendChild(li);
+    });
+  }
+}
+
+module.exports = MyListView;
 
 /***/ })
 /******/ ]);
