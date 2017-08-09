@@ -18,7 +18,7 @@ app.get('/mylist', function(req, res) {
 
 app.post('/mylist', function(req, res) {
   db.collection('mylist').save(req.body, function(err, result) {
-    res.redirect('/');
+    res.json(result);
   });
 });
 

@@ -89,11 +89,54 @@ var requestComplete = function() {
   var countriesView = new SelectListView(countries)
 }
 
+////
+
+var saveToMyList = function(evt) {
+  var mylistUrl = "/mylist"
+  var value = this.value
+  var postToMyList = { "name": value }
+
+
+  
+  var putRequest = new XMLHttpRequest();
+  putRequest.addEventListener('load', function() {
+    saveMyListComplete(this, postToMyList);
+  });
+  putRequest.open("POST", mylistUrl)
+  putRequest.setRequestHeader('Content-Type', 'application/json')
+//  saveMyListComplete(postToMyList)
+  putRequest.send(JSON.stringify(postToMyList))
+}
+
+/*
+   var putRequest = new XMLHttpRequest();
+   putRequest.open("DELETE", "/countries")
+   putRequest.send() 
+*/
+
+
+var saveMyListComplete = function(res, data) {
+  if(res.status !== 200) return;
+
+  console.log(res.responseText);
+  console.log(data)
+
+  // var jsonString = this.value;
+  // country = JSON.parse(jsonString);
+  // console.log(country);
+  // var myListView = new MyListView(country)
+}
+
+
+/////
+
 var app = function(){
 
   var url = "https://restcountries.eu/rest/v2/all";
   makeRequest(url, requestComplete);
-  
+
+  var countrySelect = document.querySelector("#countries-list")
+  countrySelect.addEventListener("change", saveToMyList)
 }
 
 
