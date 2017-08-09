@@ -1,8 +1,8 @@
-var BucketListView = function(countries){
+var SelectListView = function(countries){
   this.render(countries);
 }
 
-BucketListView.prototype = {
+SelectListView.prototype = {
   render: function(countries){
     var select = document.querySelector("#countries-list");
     
@@ -14,4 +14,4 @@ BucketListView.prototype = {
   }
 }
 
-module.exports = BucketListView;
+module.exports = SelectListView;

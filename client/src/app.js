@@ -1,4 +1,4 @@
-var BucketListView = require('./views/bucketListView');
+var SelectListView = require('./views/selectListView');
 
 var makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -7,15 +7,13 @@ var makeRequest = function(url, callback) {
   request.send();
 }
 
-// var countries;
-
 var requestComplete = function() {
   if(this.status !== 200) return;
 
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
   console.log(countries);
-  var countriesView = new BucketListView(countries)
+  var countriesView = new SelectListView(countries)
 }
 
 var app = function(){

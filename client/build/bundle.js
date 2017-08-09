@@ -67,32 +67,11 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
-/***/ (function(module, exports) {
-
-var BucketListView = function(countries){
-  this.render(countries);
-}
-
-BucketListView.prototype = {
-  render: function(countries){
-    var select = document.querySelector("#countries-list");
-    
-    countries.forEach( function(country){
-      var option = document.createElement("option");
-      option.innerText = country.name;
-      select.appendChild(option)
-    });
-  }
-}
-
-module.exports = BucketListView;
-
-/***/ }),
+/* 0 */,
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var BucketListView = __webpack_require__(0);
+var SelectListView = __webpack_require__(2);
 
 var makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -101,15 +80,13 @@ var makeRequest = function(url, callback) {
   request.send();
 }
 
-// var countries;
-
 var requestComplete = function() {
   if(this.status !== 200) return;
 
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
   console.log(countries);
-  var countriesView = new BucketListView(countries)
+  var countriesView = new SelectListView(countries)
 }
 
 var app = function(){
@@ -121,6 +98,28 @@ var app = function(){
 
 
 window.addEventListener('load', app);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var SelectListView = function(countries){
+  this.render(countries);
+}
+
+SelectListView.prototype = {
+  render: function(countries){
+    var select = document.querySelector("#countries-list");
+    
+    countries.forEach( function(country){
+      var option = document.createElement("option");
+      option.innerText = country.name;
+      select.appendChild(option)
+    });
+  }
+}
+
+module.exports = SelectListView;
 
 /***/ })
 /******/ ]);
