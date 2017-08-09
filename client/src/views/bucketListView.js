@@ -1,19 +1,17 @@
-// var BucketListView = function(countries){
-//   this.render(countries);
-// }
+var BucketListView = function(countries){
+  this.render(countries);
+}
 
-// BuckeListView.prototype = {
-//   render: function(countries){
+BucketListView.prototype = {
+  render: function(countries){
+    var select = document.querySelector("#countries-list");
     
-//     countries.forEach( function(country{
-//       var li = document.createElement('li');
-//       var text = document.createElement('p');
-//       var ul = document.getElementById('countries');
-//       text.innerText = country.name;
-//       li.appendChild(text);
-//       ul.appendChild(li);
-//     });
-//   }
-// }
+    countries.forEach( function(country){
+      var option = document.createElement("option");
+      option.innerText = country.name;
+      select.appendChild(option)
+    });
+  }
+}
 
-// module.exports = BuckeListView;
+module.exports = BucketListView;

@@ -7,7 +7,7 @@ var makeRequest = function(url, callback) {
   request.send();
 }
 
-var countries;
+// var countries;
 
 var requestComplete = function() {
   if(this.status !== 200) return;
@@ -15,6 +15,7 @@ var requestComplete = function() {
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
   console.log(countries);
+  var countriesView = new BucketListView(countries)
 }
 
 var app = function(){

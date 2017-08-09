@@ -70,25 +70,23 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-// var BucketListView = function(countries){
-//   this.render(countries);
-// }
+var BucketListView = function(countries){
+  this.render(countries);
+}
 
-// BuckeListView.prototype = {
-//   render: function(countries){
+BucketListView.prototype = {
+  render: function(countries){
+    var select = document.querySelector("#countries-list");
     
-//     countries.forEach( function(country{
-//       var li = document.createElement('li');
-//       var text = document.createElement('p');
-//       var ul = document.getElementById('countries');
-//       text.innerText = country.name;
-//       li.appendChild(text);
-//       ul.appendChild(li);
-//     });
-//   }
-// }
+    countries.forEach( function(country){
+      var option = document.createElement("option");
+      option.innerText = country.name;
+      select.appendChild(option)
+    });
+  }
+}
 
-// module.exports = BuckeListView;
+module.exports = BucketListView;
 
 /***/ }),
 /* 1 */
@@ -103,7 +101,7 @@ var makeRequest = function(url, callback) {
   request.send();
 }
 
-var countries;
+// var countries;
 
 var requestComplete = function() {
   if(this.status !== 200) return;
@@ -111,6 +109,7 @@ var requestComplete = function() {
   var jsonString = this.responseText;
   countries = JSON.parse(jsonString);
   console.log(countries);
+  var countriesView = new BucketListView(countries)
 }
 
 var app = function(){
